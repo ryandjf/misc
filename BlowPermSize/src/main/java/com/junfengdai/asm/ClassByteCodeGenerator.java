@@ -1,12 +1,12 @@
-package com.junfengdai;
+package com.junfengdai.asm;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-public class FakeClassByteCodeGenerator {
-
+public class ClassByteCodeGenerator {
+    private static final String FAKE_METHOD_NAME = "M";
     private static final int METHOD_NUMBER = 10;
 
     public byte[] generateClass(String className) {
@@ -15,7 +15,7 @@ public class FakeClassByteCodeGenerator {
 
         generateConstructor(classWriter);
         for (int i = 0; i < METHOD_NUMBER; i++) {
-            generateMethod(classWriter, "M" + i);
+            generateMethod(classWriter, FAKE_METHOD_NAME + i);
         }
 
         classWriter.visitEnd();
