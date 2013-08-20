@@ -1,9 +1,11 @@
 package com.junfengdai.service;
 
 import com.junfengdai.dao.MovieDao;
+import com.junfengdai.domain.Movie;
 import org.junit.Test;
 
 import static org.easymock.EasyMock.createStrictMock;
+import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
@@ -18,13 +20,16 @@ public class MovieServiceTest {
         MovieDao dao = createStrictMock(MovieDao.class);
         service.setMovieDao(dao);
 
-        expect(dao.countMovies()).andReturn(3);
-        expect(dao.countShows()).andReturn(4);
+        Movie expectedMovie = new Movie();
+        expectedMovie.setName("Brad");
+        //expect(dao.getMovieByName("Brad")).andReturn(expectedMovie);
+        expect(dao.getMovieByName(eq("Brad"))).andReturn(expectedMovie);
 
         replay(dao);
-        int number = service.retrieveMovieCount();
+        Movie movie = service.getMovieByName("Brad");
         verify(dao);
-        assertThat(number, is(7));
+
+        assertThat(movie.getName(), is("Brad"));
     }
 
 

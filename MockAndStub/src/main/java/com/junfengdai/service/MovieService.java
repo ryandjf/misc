@@ -1,6 +1,7 @@
 package com.junfengdai.service;
 
 import com.junfengdai.dao.MovieDao;
+import com.junfengdai.domain.Movie;
 
 public class MovieService {
     private MovieDao movieDao;
@@ -10,7 +11,12 @@ public class MovieService {
     }
 
     public int retrieveMovieCount() {
-        //return movieDao.countMovies() + movieDao.countShows();
-        return movieDao.countMovies() + 4;
+        return movieDao.countMovies() + movieDao.countShows();
+        //return movieDao.countMovies() + 4;
+        //return 9;
+    }
+
+    public Movie getMovieByName(String name) {
+        return movieDao.getMovieByName(name);
     }
 }

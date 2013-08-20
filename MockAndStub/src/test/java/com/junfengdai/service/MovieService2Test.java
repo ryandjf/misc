@@ -3,44 +3,63 @@ package com.junfengdai.service;
 import com.junfengdai.dao.MovieDao;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class MovieService2Test {
-
     @Test
-    public void shouldVerifyReturn2() {
+    public void shouldNotVerifyReturnValue() {
         MovieService service = new MovieService();
         MovieDao dao = mock(MovieDao.class);
         service.setMovieDao(dao);
 
-        when(dao.countMovies()).thenReturn(3);
-        //when(dao.countShows()).thenReturn(4);
+        when(dao.countShows()).thenReturn(4);
+        when(dao.countMovies()).thenReturn(5);
 
-        int number = service.retrieveMovieCount();
-        assertThat(number, is(7));
+        int movieCount = service.retrieveMovieCount();
 
-        verify(dao).countMovies();
+        assertThat(movieCount, is(9));
+
         verify(dao).countShows();
+        verify(dao).countMovies();
+        verify(dao).countMovies();
     }
 
     @Test
-    public void shouldVerifyOrder(){
-        List list = mock(List.class);
+    public void test() {
+        MarketEdge me = getMV();
+        assertThat(me.value, is(50));
+        assertThat(deliverBusinessValue(), is(30));
+    }
 
-        list.add("one");
-        list.clear();
-        list.add("two");
+    public int deliverBusinessValue() {
+        int value = 10;
 
-        verify(list).clear();
-        verify(list).add("two");
-        verify(list).add("one");
+        try {
+            value = 20;
+            throw new RuntimeException();
+        } catch (Exception e) {
+            value = 30;
+            return value;
+        } finally {
+            value = 50;
+        }
+    }
 
+    private MarketEdge getMV() {
+        MarketEdge marketEdge = new MarketEdge();
+
+        try {
+            marketEdge.value = 20;
+            throw new RuntimeException();
+        } catch (Exception e) {
+            marketEdge.value = 30;
+            return marketEdge;
+        } finally {
+            marketEdge.value = 50;
+        }
     }
 }
