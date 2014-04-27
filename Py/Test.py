@@ -9,7 +9,7 @@ def SyncAllFolders():
     #prefix = "C:\\Users\\daijunf"
     prefix = "/Users/twer"
     source = os.path.join(prefix, "OneDrive")
-    targets = ["Dropbox", "Google Drive", "Box Documents", "Cloud Drive"]
+    targets = ["Dropbox", "Google Drive", "Box Sync", "Cloud Drive"]
     #targets = ["Dropbox"]
     for i in range(len(targets)):
         SyncFolders(source, os.path.join(prefix, targets[i]))
@@ -18,7 +18,7 @@ def SyncAllFolders():
 def SyncByDirection():
     #prefix = "C:\\Users\\daijunf"
     prefix = "/Users/twer"
-    folders = ["OneDrive", "Dropbox", "Google Drive", "Cloud Drive", "Box Documents"]
+    folders = ["OneDrive", "Dropbox", "Google Drive", "Cloud Drive", "Box Sync"]
     for i in range(len(folders)):
         for j in range(len(folders)):
             if(i != j):
