@@ -7,18 +7,30 @@ ignoreFolders = [".dropbox.cache"]
 
 def SyncAllFolders():
     #prefix = "C:\\Users\\daijunf"
-    prefix = "/Users/twer"
+    prefix = "/Users/jfdai"
     source = os.path.join(prefix, "OneDrive")
-    targets = ["Dropbox", "Google Drive", "Box Sync", "Cloud Drive"]
+    targets = ["Dropbox", "Google Drive", "Box Sync"]
     #targets = ["Dropbox"]
     for i in range(len(targets)):
         SyncFolders(source, os.path.join(prefix, targets[i]))
         CheckFolders(os.path.join(prefix, targets[i]), source)
+    # Google Drive 15G
+    RemoveNonImportantFolder(prefix, "Google Drive", "Music")
+    # Box Sync 10G
+    RemoveNonImportantFolder(prefix, "Box Sync", "Music")
+    RemoveNonImportantFolder(prefix, "Box Sync", "Others")
+    # Dropbox 10G
+    RemoveNonImportantFolder(prefix, "Dropbox", "Music")
+    RemoveNonImportantFolder(prefix, "Dropbox", "Others")
+
+def RemoveNonImportantFolder(prefix, drive, folder):
+    path = os.path.join(prefix, drive)
+    shutil.rmtree(os.path.join(path, folder), ignore_errors=True)
 
 def SyncByDirection():
     #prefix = "C:\\Users\\daijunf"
-    prefix = "/Users/twer"
-    folders = ["OneDrive", "Dropbox", "Google Drive", "Cloud Drive", "Box Sync"]
+    prefix = "/Users/jfdai"
+    folders = ["OneDrive", "Dropbox", "Google Drive", "Box Sync", "BaiduDrive"]
     for i in range(len(folders)):
         for j in range(len(folders)):
             if(i != j):
@@ -73,7 +85,7 @@ def CheckFolders(srcDir, destDir):
             if os.path.exists(destPath):
                 CheckFolders(srcPath, destPath)
             else:
-                shutil.rmtree(srcPath, destPath)
+                shutil.rmtree(srcPath, ignore_errors=True)
                 print ("Delete folder from %s" % (srcPath))
 
 def RenameAllFiles(path, prefix, width):
