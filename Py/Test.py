@@ -3,40 +3,15 @@ import zipfile
 import shutil
 
 ignoreFiles = ["desktop.ini", ".lock", ".DS_Store"]
-ignoreFolders = [".dropbox.cache"]
-
+ignoreFolders = [".dropbox.cache", "Music", "Others"]
+ignoreSrcPaths = ["/Users/jfdai/OneDrive/Music", "/Users/jfdai/OneDrive/Others"]
+#/Users/jfdai/Library/Mobile Documents/com~apple~CloudDocs
 def SyncAllFolders():
-    #prefix = "C:\\Users\\daijunf"
-    prefix = "/Users/jfdai"
-    source = os.path.join(prefix, "OneDrive")
-    targets = ["Dropbox", "Google Drive", "Box Sync"]
-    #targets = ["Dropbox"]
+    source = "/Users/jfdai/OneDrive"
+    targets = ["/Users/jfdai/Dropbox", "/Users/jfdai/Google Drive", "/Users/jfdai/Box Sync", "/Users/jfdai/Library/Mobile Documents/com~apple~CloudDocs"]
     for i in range(len(targets)):
-        SyncFolders(source, os.path.join(prefix, targets[i]))
-        CheckFolders(os.path.join(prefix, targets[i]), source)
-    # Google Drive 15G
-    RemoveNonImportantFolder(prefix, "Google Drive", "Music")
-    # Box Sync 10G
-    RemoveNonImportantFolder(prefix, "Box Sync", "Music")
-    RemoveNonImportantFolder(prefix, "Box Sync", "Others")
-    # Dropbox 10G
-    RemoveNonImportantFolder(prefix, "Dropbox", "Music")
-    RemoveNonImportantFolder(prefix, "Dropbox", "Others")
-
-def RemoveNonImportantFolder(prefix, drive, folder):
-    path = os.path.join(prefix, drive)
-    shutil.rmtree(os.path.join(path, folder), ignore_errors=True)
-
-def SyncByDirection():
-    #prefix = "C:\\Users\\daijunf"
-    prefix = "/Users/jfdai"
-    folders = ["OneDrive", "Dropbox", "Google Drive", "Box Sync", "BaiduDrive"]
-    for i in range(len(folders)):
-        for j in range(len(folders)):
-            if(i != j):
-                srcDir = os.path.join(prefix, folders[i])
-                destDir = os.path.join(prefix, folders[j])   
-                SyncFolders(srcDir, destDir)
+        SyncFolders(source, targets[i])
+        CheckFolders(targets[i], source)
 
 def SyncFolders(srcDir, destDir):
     if srcDir in ignoreFolders:
@@ -44,6 +19,9 @@ def SyncFolders(srcDir, destDir):
         return
     for f in os.listdir(srcDir):
         srcPath = os.path.join(srcDir, f)
+        if srcPath in ignoreSrcPaths:
+            print ("Ignore source folder %s" % (srcPath))
+            return
         destPath = os.path.join(destDir, f)
         if os.path.isfile(srcPath):
             if f in ignoreFiles:
