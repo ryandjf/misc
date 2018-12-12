@@ -1,36 +1,13 @@
-minikube start --vm-driver=virtualbox
-
-kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080
-
-kubectl expose deployment hello-minikube --type=NodePort
-
-kubectl get pod
-
-curl $(minikube service hello-minikube --url)
-
-kubectl delete services hello-minikube
-
-kubectl delete deployment hello-minikube
-
-minikube stop
-
-minikube delete
-
-minikube start --memory=8192 --cpus=4 --kubernetes-version=v1.10.0 \
-    --extra-config=controller-manager.cluster-signing-cert-file="/var/lib/localkube/certs/ca.crt" \
-    --extra-config=controller-manager.cluster-signing-key-file="/var/lib/localkube/certs/ca.key" \
-    --vm-driver=`virtualbox`
-
 kubectl get svc -n istio-system
 
 kubectl get pods -n istio-system
-
 
 kubectl delete -f install/kubernetes/istio-demo.yaml
 kubectl delete -f install/kubernetes/istio-demo-auth.yaml
 
 
 kubectl label namespace default istio-injection=enabled
+
 kubectl get namespace -L istio-injection
 
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
@@ -46,23 +23,6 @@ ssh -i ~/.ssh/aws.pem ubuntu@ec2-54-223-95-220.cn-north-1.compute.amazonaws.com.
 
 scp -i ~/.ssh/aws.pem product-service-kube.yaml ubuntu@ec2-54-223-95-220.cn-north-1.compute.amazonaws.com.cn:/tmp/product-service-kube.yaml
 
-aws eks create-cluster --name devel --role-arn arn:aws:iam::111122223333:role/eks-service-role-AWSServiceRoleForAmazonEKS-EXAMPLEBKZRQR --resources-vpc-config subnetIds=subnet-a9189fe2,subnet-50432629,securityGroupIds=sg-f5c54184
-
-SecurityGroups	sg-0718927f055508af1	Security group for the cluster control plane communication with worker nodes	
-VpcId	vpc-0da11e8d4a5c2def4	The VPC Id	
-SubnetIds	subnet-0f0424b10379cd247,subnet-059a18c0ec7a56d77,subnet-0614818b394c1e482	All subnets in the VPC
-
-NodeInstanceRole	arn:aws:iam::545465126879:role/ecks-cluster-worker-nodes-NodeInstanceRole-1WQEYWBD5W283	The node instance role	
-NodeSecurityGroup	sg-0758805c06cc64486	The security group for the node group
-
-
-Access Key ID:
-AKIAI3ZDR65TVM4KEIGA
-Secret Access Key:
-ZUuWpx/7JpTgNFkICmXV7d/ZhiRiXn8UGMHeAc+n
-
-
-kubectl run hello-world --replicas=2 --labels="run=load-balancer-example" --image=springio/gs-spring-boot-docker  --port=8080
 
 kubectl get deployments hello-world
 kubectl describe deployments hello-world
@@ -131,6 +91,7 @@ eksctl create cluster \
     --ssh-public-key ryandjf-163-us-east
 
 kubectl create -f install/kubernetes/helm/helm-service-account.yaml
+
 helm init --service-account tiller
 
 helm install \
@@ -150,22 +111,6 @@ eksctl utils write-kubeconfig --name=istio-on-eks
 kubectl run hello-world --replicas=5 --labels="run=load-balancer-example" --image=springio/gs-spring-boot-docker  --port=8080
 kubectl expose deployment hello-world --type=LoadBalancer --name=my-service
 
-
-aliases:
-  - &step_attach_workspace
-    attach_workspace:
-      at: /home/circleci
-
-# partial tree
-jobs:
-  build_something:
-    steps:
-      - *step_attach_workspace
-      - run: custom_command.sh
-      - *save_results  # would also be defined in aliases
-
-
-
 docker run -v /var/lib/mysql -p 3306:3306 --restart=always --name dmall_product_db -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=dmall_product_db -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql -d mysql:latest mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
 
 jdbc:mysql://localhost:3306/dmall_product_db?noAccessToProcedureBodies=true&createDatabaseIfNotExist=true&m=yes&characterEncoding=UTF-8&connectTimeout=30000&useSSL=false&socketTimeout=30000&autoReconnect=true&maxReconnects=10&initialTimeout=10
@@ -174,21 +119,8 @@ jdbc:mysql://localhost:3306/dmall_product_db?user=mysql&password=mysql&allowMult
 
 ./gradlew -Dflyway.schemas=dmall_product_db flywayClean flywayMigrate
 
-955065381857.dkr.ecr.cn-north-1.amazonaws.com.cn/product-service:0.1.8
-
-minikube start --vm-driver=virtualbox
-
-eval $(minikube docker-env)
 kubectl config use-context minikube
-minikube dashboard
-minikube service [-n NAMESPACE] [--url] NAME
-minikube ip
+
 kubectl get service $SERVICE --output='jsonpath="{.spec.ports[0].nodePort}"'
 
-minikube start --memory=8192 --cpus=4 --kubernetes-version=v1.10.0 \
-    --extra-config=controller-manager.cluster-signing-cert-file="/var/lib/localkube/certs/ca.crt" \
-    --extra-config=controller-manager.cluster-signing-key-file="/var/lib/localkube/certs/ca.key" \
-    --vm-driver='virtualbox'
 
-minikube start --memory=8192 --cpus=4 --kubernetes-version=v1.10.0 \
-    --vm-driver='virtualbox'

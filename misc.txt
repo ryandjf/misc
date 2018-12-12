@@ -1,10 +1,6 @@
 docker run -v /var/lib/mysql -p 3306:3306 --restart=always --name sanxing-db-user -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=data_store -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql -d mysql:latest mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
 
-
 docker run -v /var/lib/mysql -p 3307:3306 --restart=always --name sanxing-db-feedback -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=feedback -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql -d mysql:latest mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
-
-
-
 
 docker run -v /var/lib/mysql -p 3307:3306 --restart=always --name sanxing-mysql -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=data_store -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql -d mysql:latest
 
@@ -13,54 +9,8 @@ docker run -v /var/lib/mysql -p 3307:3306 --restart=always --name sanxing-mysql 
 docker exec -it sanxing-db-user /bin/sh -c 'mysql -u mysql -pmysql'
 docker exec -it sanxing-db-feedback /bin/sh -c 'mysql -u mysql -pmysql'
 
-
 GRANT ALL PRIVILEGES ON data_store.* TO 'mysql'@'%' WITH GRANT OPTION;
 
-
-
-3. 安装 MySQL, 可使用 Docker 安装，命令如下：
-
-   `docker run -v /var/lib/mysql -p 3307:3306 --restart=always --name sanxing-db-feedback -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=feedback -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql -d mysql:latest mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0`
-
-4. 在 MySQL 中创建数据库（如果使用上述 Docker 命令则数据库以创建好，可跳过此步骤）
-5. 在 terminal 中设置 `build.gradle` 中所需要的环境变量（使用 Docker 则可跳过此步骤）
-
-
-   docker run -v /var/lib/mysql -p 3307:3306 --restart=always --name sanxing-mysql -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=data_store -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql mysql:latest
-
-eyJhbGciOiJIUzUxMiJ9
-
-{
-    "name": "Luminary",
-    "description": "Reflection program for luminaries.",
-}
-
-Program ID: 854ec6954e68ba5a15494f
-
-git remote add hub git@github.com:twlabs/sanxing-feedback.git
-
-https://staging-sanxing-app.herokuapp.com/#/callback
-
-insert into users (id, name, email, role, password) values ("jfdai", "Junfeng Dai", "jfdai@example.com", "NORMAL", "$2a$04$g53rbVoS6pMZA1DiqCrafeIblJSguChoKErkq5qxdlTa1R/KH9pw.");
-
-Staging Feedback
-mysql://b7932e15666987:e6f546d8@us-cdbr-iron-east-04.cleardb.net/heroku_d9a9e62b51a7e43?reconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF-8
-
-mysql --host=us-cdbr-iron-east-04.cleardb.net --user=b7932e15666987 --password=e6f546d8 heroku_d9a9e62b51a7e43
-
-Prod Feedback
-mysql://bbc15ff7682f34:269d8155@us-cdbr-iron-east-04.cleardb.net/heroku_d32409aacbba123?reconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF-8
-
-mysql --host=us-cdbr-iron-east-04.cleardb.net --user=bbc15ff7682f34 --password=269d8155 heroku_d32409aacbba123
-
-Staging User
-mysql://b4626e6dac0ad2:8d27179e@us-cdbr-iron-east-04.cleardb.net/heroku_ff1dd1847916a01?reconnect=true
-
-mysql --host=us-cdbr-iron-east-04.cleardb.net --user=b4626e6dac0ad2 --password=8d27179e heroku_ff1dd1847916a01
-
-Prod User
-mysql://b4c05120f3e97e:5ce0341a@us-cdbr-iron-east-04.cleardb.net/heroku_a5b9105ec96e5fb?reconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF-8
-
-mysql --host=us-cdbr-iron-east-04.cleardb.net --user=b4c05120f3e97e --password=5ce0341a heroku_a5b9105ec96e5fb
+mysql --host=us-cdbr-iron-east-04.cleardb.net --user=XXX --password=XXX
 
 mysql --host=localhost --port=3306 --user=mysql --password=mysql dmall_product_db
