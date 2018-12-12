@@ -42,7 +42,7 @@ for office in offices:
 
 print("There are totally " + str(len(idList)) + " employees")
 
-baseUrl = "https://jigsaw.thoughtworks.net/api/assignments.json?overlaps=01-07-2018,01-09-2018&page="
+baseUrl = "https://jigsaw.thoughtworks.net/api/assignments.json?overlaps=01-07-2018,01-10-2018&page="
 pageNumber = 1
 assignments = []
 while True:

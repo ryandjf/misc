@@ -63,4 +63,4 @@ mysql://b4c05120f3e97e:5ce0341a@us-cdbr-iron-east-04.cleardb.net/heroku_a5b9105e
 
 mysql --host=us-cdbr-iron-east-04.cleardb.net --user=b4c05120f3e97e --password=5ce0341a heroku_a5b9105ec96e5fb
 
-
+mysql --host=localhost --port=3306 --user=mysql --password=mysql dmall_product_db

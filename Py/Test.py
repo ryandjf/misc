@@ -3,16 +3,21 @@ import zipfile
 import shutil
 
 ignoreFiles = ["desktop.ini", ".lock", ".DS_Store"]
-ignoreDestPaths = ["/Users/jfdai/Dropbox/.dropbox.cache", "/Users/jfdai/Dropbox/Downloads", "/Users/jfdai/Dropbox/eBooks", 
-    "/Users/jfdai/Dropbox/Music", "/Users/jfdai/Dropbox/Photos", "/Users/jfdai/Dropbox/Samples", "/Users/jfdai/Dropbox/Videos",
+ignoreDestPaths = [
+    "/Users/jfdai/Dropbox/.dropbox.cache", "/Users/jfdai/Dropbox/Downloads", "/Users/jfdai/Dropbox/eBooks", "/Users/jfdai/Dropbox/Music", "/Users/jfdai/Dropbox/Photos", "/Users/jfdai/Dropbox/Samples", "/Users/jfdai/Dropbox/Videos",
     "/Users/jfdai/Google Drive/Music", "/Users/jfdai/Google Drive/Videos", "/Users/jfdai/Google Drive/Samples", "/Users/jfdai/Google Drive/Downloads", "/Users/jfdai/Google Drive/Photos",
-    "/Users/jfdai/Box Sync/Downloads", "/Users/jfdai/Box Sync/eBooks", "/Users/jfdai/Box Sync/Music",
-    "/Users/jfdai/Box Sync/Photos", "/Users/jfdai/Box Sync/Samples", "/Users/jfdai/Box Sync/Videos"]
+    "/Users/jfdai/Box Sync/Downloads", "/Users/jfdai/Box Sync/eBooks", "/Users/jfdai/Box Sync/Music", "/Users/jfdai/Box Sync/Photos", "/Users/jfdai/Box Sync/Samples", "/Users/jfdai/Box Sync/Videos"
+    ]
 ignoreSrcPaths = []
 #/Users/jfdai/Library/Mobile Documents/com~apple~CloudDocs
 def SyncAllFolders():
     source = "/Users/jfdai/OneDrive"
-    targets = ["/Users/jfdai/Dropbox", "/Users/jfdai/Google Drive", "/Users/jfdai/Box Sync", "/Users/jfdai/Library/Mobile Documents/com~apple~CloudDocs"]
+    targets = [
+#    "/Users/jfdai/Dropbox", 
+    "/Users/jfdai/Google Drive", 
+#    "/Users/jfdai/Box Sync", 
+    "/Users/jfdai/Library/Mobile Documents/com~apple~CloudDocs"
+    ]
     for i in range(len(targets)):
         SyncFolders(source, targets[i])
         CheckFolders(targets[i], source)
