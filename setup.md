@@ -135,3 +135,20 @@ virtualenv <DIR>
 source <DIR>/bin/activate
 
 ```
+
+
+## Miniconda
+
+```
+
+conda info --envs
+conda create --name python35 python=3.5.6
+
+source activate python35
+source deactivate
+
+conda search beautifulsoup4
+conda install beautifulsoup4
+conda list
+
+```

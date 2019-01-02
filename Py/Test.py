@@ -14,7 +14,7 @@ def SyncAllFolders():
     source = "/Users/jfdai/OneDrive"
     targets = [
 #    "/Users/jfdai/Dropbox", 
-    "/Users/jfdai/Google Drive", 
+#    "/Users/jfdai/Google Drive", 
 #    "/Users/jfdai/Box Sync", 
     "/Users/jfdai/Library/Mobile Documents/com~apple~CloudDocs"
     ]

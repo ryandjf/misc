@@ -2,7 +2,10 @@ import json
 import urllib.request
 import xlwt
 
-headers = {'Authorization': '64ac49342abf8ff13ac569513fad057e'}
+# pip install --upgrade pip
+# pip install xlwt
+
+headers = {'Authorization': 'XXXXXXXX'}
 
 baseUrl = "https://jigsaw.thoughtworks.net/api/people?home_office="
 
@@ -42,7 +45,7 @@ for office in offices:
 
 print("There are totally " + str(len(idList)) + " employees")
 
-baseUrl = "https://jigsaw.thoughtworks.net/api/assignments.json?overlaps=01-07-2018,01-10-2018&page="
+baseUrl = "https://jigsaw.thoughtworks.net/api/assignments.json?overlaps=01-07-2018,31-12-2018&page="
 pageNumber = 1
 assignments = []
 while True:
@@ -52,18 +55,22 @@ while True:
 
     req = urllib.request.Request(url, headers=headers)
 
-    page = urllib.request.urlopen(req).read()
+    try:
+        page = urllib.request.urlopen(req).read()
 
-    page = page.decode('utf-8')
+        page = page.decode('utf-8')
 
-    result = json.loads(s=page)
+        result = json.loads(s=page)
 
-    test = list(map(lambda x: (x["account"]["name"], x["project"]["name"], x["project"]["type"]),
+        test = list(map(lambda x: (x["account"]["name"], x["project"]["name"], x["project"]["type"]),
                     filter(lambda x: idList.__contains__(x["consultant"]["employeeId"]), result)))
 
-    assignments = assignments + test
+        assignments = assignments + test
 
-    if len(result) < 100:
+        if len(result) < 100:
+            break
+    except urllib.error.HTTPError:
+        print("Reach the page count.")
         break
 
     pageNumber = pageNumber + 1
