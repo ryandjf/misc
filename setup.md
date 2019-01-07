@@ -152,3 +152,30 @@ conda install beautifulsoup4
 conda list
 
 ```
+
+## Terraform
+```
+
+curl -o terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_darwin_amd64.zip
+unzip terraform.zip -d /usr/local/bin
+rm -rf terraform.zip
+terraform --version
+
+```
+
+## Ansible
+```
+
+sudo launchctl limit maxfiles unlimited
+sudo pip install ansible
+ansible --version
+ansible-playbook --version
+
+```
+
+## PEM to Pub
+```
+
+openssl rsa -in key.pem -pubout -out key.pub
+
+```
