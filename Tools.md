@@ -1,0 +1,6 @@
+* [terraform](https://www.terraform.io/)
+* [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator)
+* [helm](https://docs.helm.sh/)
+* [eksctl](https://eksctl.io/)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [kops](https://github.com/kubernetes/kops)
