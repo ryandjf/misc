@@ -103,11 +103,21 @@ go get -u -v github.com/kubernetes-sigs/aws-iam-authenticator/cmd/aws-iam-authen
 brew install kubernetes-cli
 
 curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/darwin/amd64/kubectl
-curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-sudo mv ./kubectl /usr/local/bin/kubectl
+
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl"
+sudo mv -f ./kubectl /usr/local/bin/kubectl
 sudo chmod +x /usr/local/bin/kubectl
 
 kubectl version
+
+```
+
+## kops
+
+```
+
+brew install kops
+
 
 ```
 
