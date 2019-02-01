@@ -1,6 +1,6 @@
-##准备工作
+## Install Single Node Kubernetes on AWS
 
-###更换apt源为163 (Optional)
+### 更换apt源为163 (Optional)
 
 ```
 cat /etc/apt/sources.list
@@ -30,6 +30,7 @@ https://docs.docker.com/install/linux/docker-ce/ubuntu/
 注意选择Kubernetes支持的版本
 
 ```
+
 sudo apt-get update
 sudo apt-get install -y \
     apt-transport-https \
@@ -53,12 +54,13 @@ sudo usermod -aG docker $USER
 
 ```
 
-### 配置docker mirror
+### 配置docker mirror (Optional)
 
 创建（或修改）/etc/docker/daemon.json。官方中国镜像速度还行。
 ```
 {
-    "registry-mirrors": ["https://registry.docker-cn.com", "https://docker.mirrors.ustc.edu.cn"]
+    "registry-mirrors": ["https://registry.docker-cn.com", "https://docker.mirrors.ustc.edu.cn"],
+    "insecure-registries" : ["ec2-52-81-55-170.cn-north-1.compute.amazonaws.com.cn:30500"]
 }
 ```
 
@@ -72,13 +74,10 @@ sudo systemctl restart docker
 ```
 
 sudo apt-get update && sudo apt-get install -y apt-transport-https
+
 curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | sudo apt-key add - 
 
-```
-Add following content into /etc/apt/sources.list.d/kubernetes.list
-```
-
-deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+sudo add-apt-repository "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main"
 
 ```
 
@@ -235,6 +234,17 @@ kubeadm join --token={token} {master ip}
 sudo systemctl restart docker
 
 ```
+
+### Kubernete Web UI (Optional)
+```
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+
+kubectl proxy
+
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/.
+
+```
+
 
 ```
 Unable to update cni config: No networks found in /etc/cni/net.d

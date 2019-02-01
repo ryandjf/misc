@@ -12,8 +12,8 @@ KUBE_PAUSE_VERSION=3.1
 ETCD_VERSION=3.2.24
 DNS_VERSION=1.2.2
 
-GCR_URL=gcr.io/google-containers
-PRIVATE_REGISTRY_URL=docker.io/ryandjf
+K8S_GCR_URL=k8s.gcr.io
+PRIVATE_REGISTRY_URL=docker.io/anjia0532
 
 images=(
     kube-apiserver:${KUBE_VERSION}
@@ -28,9 +28,7 @@ images=(
 
 for image in ${images[@]} ; do
   docker pull "$PRIVATE_REGISTRY_URL/google-containers.${image}"
-  docker tag  $GCR_URL/$image "$PRIVATE_REGISTRY_URL/google-containers.${image}"
-  docker push "$PRIVATE_REGISTRY_URL/google-containers.${image}"
-  docker rmi $GCR_URL/$image
+  docker tag  "$PRIVATE_REGISTRY_URL/google-containers.${image}" $K8S_GCR_URL/$image
   docker rmi "$PRIVATE_REGISTRY_URL/google-containers.${image}"
 done
 
