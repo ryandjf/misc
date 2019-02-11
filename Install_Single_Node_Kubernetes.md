@@ -80,6 +80,17 @@ curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | sudo apt-key ad
 sudo add-apt-repository "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main"
 
 ```
+or 
+```
+
+sudo apt-get update && sudo apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
+
+```
 
 ### 安装kubeadm/kubelet/kubectl
 ```
@@ -190,7 +201,7 @@ docker rmi anjia0532/google-containers.coredns:1.2.2
 好了，万事俱备，开始安装master。
 ```
 
-sudo kubeadm init --kubernetes-version v1.12.2
+sudo kubeadm init --kubernetes-version v1.12.2 --apiserver-cert-extra-sans=[52.80.8.7, ec2-52-80-8-7.cn-north-1.compute.amazonaws.com.cn]
 
 ```
 
@@ -234,6 +245,35 @@ kubeadm join --token={token} {master ip}
 sudo systemctl restart docker
 
 ```
+
+
+### Unable to connect to the server: x509: certificate is valid for (Optional)
+
+One option is to tell kubectl that you don't want the certificate to be validated. Obviously this brings up security issues but I guess you are only testing so here you go:
+
+```
+
+kubectl --insecure-skip-tls-verify --context=employee-context get pods
+
+```
+
+The better option is to fix the certificate. Easiest if you reinitialize the cluster by running kubeadm reset on all nodes including the master and then do
+
+```
+
+kubeadm init --apiserver-cert-extra-sans=114.215.201.87
+
+```
+
+It's also possible to fix that certificate without wiping everything, but that's a bit more tricky. Execute something like this on the master as root:
+
+```
+rm /etc/kubernetes/pki/apiserver.*
+kubeadm alpha phase certs all --apiserver-advertise-address=0.0.0.0 --apiserver-cert-extra-sans=52.80.8.7
+docker rm -f `docker ps -q -f 'name=k8s_kube-apiserver*'`
+systemctl restart kubelet
+```
+
 
 ### Kubernete Web UI (Optional)
 ```
