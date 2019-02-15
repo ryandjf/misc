@@ -27,9 +27,9 @@ images=(
 
 
 for image in ${images[@]} ; do
-  docker pull "$PRIVATE_REGISTRY_URL/google-containers.${image}"
-  docker tag  $GCR_URL/$image "$PRIVATE_REGISTRY_URL/google-containers.${image}"
+  docker pull "$GCR_URL/${image}"
+  docker tag  "$GCR_URL/$image" "$PRIVATE_REGISTRY_URL/google-containers.${image}"
   docker push "$PRIVATE_REGISTRY_URL/google-containers.${image}"
-  docker rmi $GCR_URL/$image
+  docker rmi "$GCR_URL/$image"
   docker rmi "$PRIVATE_REGISTRY_URL/google-containers.${image}"
 done
