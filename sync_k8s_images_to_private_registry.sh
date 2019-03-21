@@ -7,10 +7,10 @@ set -e
 # For running kubeadm without an internet connection you have to pre-pull the required master images for the version of choice:
 # Check the versions and images needed for certian version of k8s, please run 'kubeadm config images list --kubernetes-version v1.12.2'
 
-KUBE_VERSION=v1.12.2
+KUBE_VERSION=v1.13.4
 KUBE_PAUSE_VERSION=3.1
 ETCD_VERSION=3.2.24
-DNS_VERSION=1.2.2
+DNS_VERSION=1.2.6
 
 GCR_URL=gcr.io/google-containers
 PRIVATE_REGISTRY_URL=docker.io/ryandjf

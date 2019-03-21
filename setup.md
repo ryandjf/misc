@@ -112,6 +112,13 @@ kubectl version
 
 ```
 
+## helm
+```
+
+brew install kubernetes-helm
+
+```
+
 ## kops
 
 ```
@@ -187,5 +194,6 @@ ansible-playbook --version
 ```
 
 openssl rsa -in key.pem -pubout -out key.pub
+ssh-keygen -y -f key.pem > key.pub
 
 ```
