@@ -215,19 +215,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ```
 
-## 安装weave scope
-我这里准备使用weave Network（主要是想用下weave scope，它只支持weave类型的网络）。
-注意如果是flannel网络方案，必须要设置--pod-network-cidr 10.244.0.0/16，其他类型的网络，请参考官方的说明。
-部署weave网络
-
-```
-
-sudo sysctl net.bridge.bridge-nf-call-iptables=1
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-
-
-```
-
 ### 准备计算资源
 
 因为我只有1个节点，要“计算资源”的话，就只能将master节点的taint去掉，否则普通的Pod默认不会调度上来。
@@ -248,6 +235,19 @@ kubeadm join --token={token} {master ip}
 ```
 
 sudo systemctl restart docker
+
+```
+
+## 安装weave scope
+我这里准备使用weave Network（主要是想用下weave scope，它只支持weave类型的网络）。
+注意如果是flannel网络方案，必须要设置--pod-network-cidr 10.244.0.0/16，其他类型的网络，请参考官方的说明。
+部署weave网络
+
+```
+
+sudo sysctl net.bridge.bridge-nf-call-iptables=1
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
 
 ```
 

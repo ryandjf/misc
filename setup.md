@@ -117,6 +117,10 @@ kubectl version
 
 brew install kubernetes-helm
 
+helm init --history-max 200
+helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.0 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.0 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+
 ```
 
 ## kops
@@ -124,7 +128,6 @@ brew install kubernetes-helm
 ```
 
 brew install kops
-
 
 ```
 
