@@ -122,6 +122,26 @@ helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.co
 helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.0 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 
 ```
+Kubernetes helm配置国内镜像源
+
+删除默认的源
+```
+helm repo remove stable
+```
+增加新的国内镜像源
+
+```
+helm repo add stable https://burdenbear.github.io/kube-charts-mirror/
+```
+或者
+```
+helm repo add stable https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+```
+
+查看helm源添加情况
+```
+helm repo list
+```
 
 ## kops
 

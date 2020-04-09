@@ -14,3 +14,9 @@ GRANT ALL PRIVILEGES ON data_store.* TO 'mysql'@'%' WITH GRANT OPTION;
 mysql --host=us-cdbr-iron-east-04.cleardb.net --user=XXX --password=XXX
 
 mysql --host=localhost --port=3306 --user=mysql --password=mysql dmall_product_db
+
+mysql --host=us-cdbr-east.cleardb.com --user=bbc15ff7682f34 --password -D heroku_d32409aacbba123
+
+kubectl create secret docker-registry my-reg --docker-server=registry.gitlab.com --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email> --namespace=<your-namespace>
+
+

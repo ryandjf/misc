@@ -42,7 +42,7 @@ done
 
 docker images
 
-sudo kubeadm init --kubernetes-version v1.13.4 --apiserver-cert-extra-sans="52.80.148.216,ec2-52-80-148-216.cn-north-1.compute.amazonaws.com.cn"
+sudo kubeadm init --kubernetes-version v1.13.4 --apiserver-cert-extra-sans="52.80.91.32,ec2-52-80-91-32.cn-north-1.compute.amazonaws.com.cn"
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
