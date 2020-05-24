@@ -23,6 +23,39 @@ python get-pip.py
 
 ```
 
+Set up mirror
+···
+#该镜像是 Homebrew 的 formula 索引的镜像 
+cd "$(brew --repo)"
+git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
+
+cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
+git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+
+brew update
+
+#该镜像是 Homebrew 二进制预编译包的镜像
+echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles' >> ~/.bash_profile
+source ~/.bash_profile
+···
+
+Restore
+```
+cd "$(brew --repo)"
+
+git remote set-url origin https://github.com/Homebrew/brew.git
+
+ 
+
+cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
+
+git remote set-url origin https://github.com/Homebrew/homebrew-core
+
+ 
+
+brew update
+```
+
 ## Git
 ```
 

@@ -10,7 +10,7 @@
   ```
   export CLUSTER_NAME=twcs-delivery
 
-  eksctl create cluster --name=${CLUSTER_NAME} --node-type m5.xlarge --version=1.16 --nodes=3 
+  eksctl create cluster --name=${CLUSTER_NAME} --node-type m5.xlarge --version=1.16 --nodes=2 
   ```
 * Check cluster nodes
   ```
@@ -19,12 +19,19 @@
 * Setup mirror proxy (optional)
 
   Check section 2.4 of [步骤2-创建EKS集群](https://github.com/aws-samples/eks-workshop-greater-china/blob/master/china/2020_EKS_Launch_Workshop/%E6%AD%A5%E9%AA%A42-%E5%88%9B%E5%BB%BAEKS%E9%9B%86%E7%BE%A4.md) 
+  
+  [amazon-api-gateway-mutating-webhook-for-k8](https://github.com/aws-samples/amazon-api-gateway-mutating-webhook-for-k8)
+
 * [Setup helm](https://eksworkshop.com/beginner/060_helm/)
 
 ## Dashboard
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+```
 
+[Creating sample user](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md)
+
+```
 kubectl proxy
 
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
@@ -75,6 +82,8 @@ kubectl create -f operator-clusterrolebinding.yaml
 * [Deploy jenkins](https://eksworkshop.com/intermediate/210_jenkins/)
   ```
 
+  helm install jenkins-release stable/jenkins --namespace devops --set rbac.create=true,agent.resources.limits.memory=2Gi,master.servicePort=80,master.serviceType=LoadBalancer,master.installPlugins={kubernetes:1.25.4\,workflow-aggregator:2.6\,workflow-job:2.39\,credentials-binding:1.23\,git:4.2.2\,htmlpublisher:1.23\,blueocean:1.23.2\,influxdb:2.3}
+
   helm install jenkins-release --namespace devops \
     --set rbac.create=true \
     --set agent.resources.limits.memory=2Gi \
@@ -86,7 +95,7 @@ kubectl create -f operator-clusterrolebinding.yaml
     --set master.InstallPlugins.3=credentials-binding:1.23 \
     --set master.InstallPlugins.4=git:4.2.2 \
     --set master.InstallPlugins.5=htmlpublisher:1.23 \
-    --set master.InstallPlugins.6=blueocean:1.22.0 \
+    --set master.InstallPlugins.6=blueocean:1.22.2 \
     --set master.InstallPlugins.7=influxdb:2.3 \
     stable/jenkins;
 
@@ -102,7 +111,16 @@ kubectl create -f operator-clusterrolebinding.yaml
   printf $(kubectl get secret --namespace devops jenkins-release -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
   ```
 * Setup InfluxDB
-在系统管理—>系统配置中配置好influxDB,命名为4keymetrics_influxdb
+Add Four Key Metrics InfluxDB target in Manage Jenkins -> Configure System -> InfluxDB Targets (replace password)
+
+```
+Description: 4KeyMetrics_InfluxDB
+URL: https://influxdb.4keymetrics.com
+Username: admin
+Password: XXXXXXXX
+Database: FourKeyMetrics
+
+```
 
 * Setup SonarQube
   ```
@@ -212,7 +230,7 @@ cat config.json
 ```
 
 ```
-kubectl create configmap docker-config --from-file=<path to config.json> -n devops
+kubectl create configmap docker-config  -n devops --from-file=<path to config.json>
 ```
 
 * Create AWS secret, Option 1
@@ -236,9 +254,15 @@ In you kubernetes deployment use imagePullSecrets: aws-registry
 ## Create Pipeline
 [Example Repo](https://github.com/ryandjf/example-product-service)
 
-You may get OOMKilled pod while running the build pipeline. Go into Manage Jenkins -> Configure System on your jenkins box under Cloud -> Images -> Kubernetes Pod Template -> Containers -> Container Template -> EnvVars, click "Advanced" (It's just above "delete container")
+* Update MySQL connection url and password.
 
-Change the value of "Limit Memory" to 2Gi.
+* Create Jenkins pipeline
+
+* Notes:
+  
+  You may get OOMKilled pod while running the build pipeline. Go into Manage Jenkins -> Configure System on your jenkins box under Cloud -> Images -> Kubernetes Pod Template -> Containers -> Container Template -> EnvVars, click "Advanced" (It's just above "delete container")
+  
+  Change the value of "Limit Memory" to 2Gi.
 
 # EKS Persistent Storage
 [How do I use persistent storage in Amazon EKS?](https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/)
