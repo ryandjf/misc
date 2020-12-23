@@ -10,7 +10,7 @@
   ```
   export CLUSTER_NAME=twcs-delivery
 
-  eksctl create cluster --name=${CLUSTER_NAME} --node-type m5.xlarge --version=1.16 --nodes=2 
+  eksctl create cluster --name=${CLUSTER_NAME} --node-type m5.xlarge --version=1.18 --nodes=3 
   ```
 * Check cluster nodes
   ```
@@ -81,24 +81,7 @@ kubectl create -f operator-clusterrolebinding.yaml
 ```
 * [Deploy jenkins](https://eksworkshop.com/intermediate/210_jenkins/)
   ```
-
-  helm install jenkins-release stable/jenkins --namespace devops --set rbac.create=true,agent.resources.limits.memory=2Gi,master.servicePort=80,master.serviceType=LoadBalancer,master.installPlugins={kubernetes:1.25.4\,workflow-aggregator:2.6\,workflow-job:2.39\,credentials-binding:1.23\,git:4.2.2\,htmlpublisher:1.23\,blueocean:1.23.2\,influxdb:2.3}
-
-  helm install jenkins-release --namespace devops \
-    --set rbac.create=true \
-    --set agent.resources.limits.memory=2Gi \
-    --set master.servicePort=80 \
-    --set master.serviceType=LoadBalancer \
-    --set master.InstallPlugins.0=kubernetes:1.25.4 \
-    --set master.InstallPlugins.1=workflow-aggregator:2.6 \
-    --set master.InstallPlugins.2=workflow-job:2.39 \
-    --set master.InstallPlugins.3=credentials-binding:1.23 \
-    --set master.InstallPlugins.4=git:4.2.2 \
-    --set master.InstallPlugins.5=htmlpublisher:1.23 \
-    --set master.InstallPlugins.6=blueocean:1.22.2 \
-    --set master.InstallPlugins.7=influxdb:2.3 \
-    stable/jenkins;
-
+  helm install jenkins-release stable/jenkins --namespace devops --set rbac.create=true,agent.resources.limits.memory=2Gi,master.servicePort=80,master.serviceType=LoadBalancer,master.installPlugins={kubernetes:1.28.3\,workflow-aggregator:2.6\,workflow-job:2.40\,credentials-binding:1.24\,git:4.4.5\,htmlpublisher:1.25\,blueocean:1.24.3\,influxdb:2.5\,command-launcher:1.5\,jdk-tool:1.4\,workflow-basic-steps:2.23}
   ```
   Get the login url
   ```

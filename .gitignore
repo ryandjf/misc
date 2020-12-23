@@ -10,6 +10,7 @@ out
 
 .DS_Store
 .gradle
+.vscode
 *.iml
 *.ipr
 *.iws
