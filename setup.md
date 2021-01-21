@@ -154,6 +154,9 @@ cd ..
 rm -rf fonts
 ```
 
+Change font in iTerm2 -> Preferences -> Profiles -> Text to 'Meslo LG S for Powerline'
+Change iTerm2 -> Preferences -> Profiles -> Window, Columns to 204, Rows to 47.
+
 # AWS
 ## AWS CLI
 ```
