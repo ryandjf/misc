@@ -120,7 +120,6 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-
 ```
 Themes:
 ```
@@ -141,6 +140,18 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autosuggestions
 )
+```
+
+Install Powerline fonts
+```
+# clone
+git clone https://github.com/powerline/fonts.git --depth=1
+# install
+cd fonts
+./install.sh
+# clean-up a bit
+cd ..
+rm -rf fonts
 ```
 
 # AWS
